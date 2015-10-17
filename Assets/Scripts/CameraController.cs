@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class CameraController : MonoBehaviour {
+	void Start() {
+		Screen.SetResolution(1920, 1080, false);
+	}
 
 	void LateUpdate () {
 		if(Camera.current != null) {
