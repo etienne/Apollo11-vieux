@@ -8,11 +8,12 @@ public class StatusTextController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log(GetComponent<Text> ().text);
 		textField = GetComponent<Text>();
+		Debug.Log (textField.text);
 	}
 	
 	static public void UpdateText (string text) {
+		Debug.Log (textField.text);
 		textField.text = text;
 	}
 }

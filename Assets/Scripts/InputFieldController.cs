@@ -6,8 +6,9 @@ using System.Text.RegularExpressions;
 
 public class InputFieldController : MonoBehaviour {
 	private string[] commands = new string[] {
-		@"^PVT (DRT|GCH) (\d+)DEG$",
-		@"^ACT FRQ (BS|HT)$"
+		@"^PVT (D|G) (\d+)DEG$",
+		@"^AB LEV-([A-Z])(\d+)$",
+		@"ACT PYR"
 	};
 
 	private InputField inputField;
@@ -23,10 +24,10 @@ public class InputFieldController : MonoBehaviour {
 			Regex regex = new Regex(command);
 			Match match = regex.Match(text);
 			if (match.Success) {
-				HoustonTextController.UpdateText(match.Value);
+				StatusTextController.UpdateText(match.Value);
 				return;
 			}
 		}
-		HoustonTextController.UpdateText("ERR // COMMANDE INVALIDE; CONSULTEZ LE MANUEL");
+		StatusTextController.UpdateText("ERR // COMMANDE INVALIDE; CONSULTEZ LE MANUEL");
 	}
 }
