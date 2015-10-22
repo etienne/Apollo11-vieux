@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 
 public class InputFieldController : MonoBehaviour {
 	private Command[] commands = new Command[] {
-		new Command(@"^PVT (D|G) (\d+)DEG$",  "trop cool ton message"),
-		new Command(@"^AB LEV-([A-Z])(\d+)$", "jcapote littéralement"),
-		new Command(@"ACT PYR",               "pyrrrooooootechnie")
+		new Command(@"^PVT (D|G) (\d+)DEG$",  "Pivoté à %$1 de $2 degrés", new string[,] { {"%D", "droite"}, {"%G", "gauche"} } ),
+		new Command(@"^AB LEV-([A-Z])(\d+)$", "Levier $1$2 abaissé"),
+		new Command(@"ACT PYR",               "Système pyrotechnique activé")
 	};
 
 	private InputField inputField;
@@ -16,17 +16,14 @@ public class InputFieldController : MonoBehaviour {
 	void Start () {
 		inputField = gameObject.GetComponent<InputField>();
 		inputField.onEndEdit.AddListener(RespondToText);
-//		houstonText = GetComponent<Text>();
 	}
 	
 	private void RespondToText(string text) {
 		foreach (Command command in commands) {
-			Regex regex = new Regex(command.regex);
-			Match match = regex.Match(text);
-			if (match.Success) {
-				StatusTextController.UpdateText(command.successMessage);
+      if (command.Execute(text)) {
+				StatusTextController.UpdateText(command.successMessage.ToUpper());
 				return;
-			}
+      }
 		}
 		StatusTextController.UpdateText("ERR // COMMANDE INVALIDE; CONSULTEZ LE MANUEL");
 	}
