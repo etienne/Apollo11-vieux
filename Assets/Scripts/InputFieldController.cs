@@ -5,10 +5,10 @@ using System.Collections;
 using System.Text.RegularExpressions;
 
 public class InputFieldController : MonoBehaviour {
-	private string[] commands = new string[] {
-		@"^PVT (D|G) (\d+)DEG$",
-		@"^AB LEV-([A-Z])(\d+)$",
-		@"ACT PYR"
+	private Command[] commands = new Command[] {
+		new Command(@"^PVT (D|G) (\d+)DEG$",  "trop cool ton message"),
+		new Command(@"^AB LEV-([A-Z])(\d+)$", "jcapote littéralement"),
+		new Command(@"ACT PYR",               "pyrrrooooootechnie")
 	};
 
 	private InputField inputField;
@@ -20,11 +20,11 @@ public class InputFieldController : MonoBehaviour {
 	}
 	
 	private void RespondToText(string text) {
-		foreach (string command in commands) {
-			Regex regex = new Regex(command);
+		foreach (Command command in commands) {
+			Regex regex = new Regex(command.regex);
 			Match match = regex.Match(text);
 			if (match.Success) {
-				StatusTextController.UpdateText(match.Value);
+				StatusTextController.UpdateText(command.successMessage);
 				return;
 			}
 		}
