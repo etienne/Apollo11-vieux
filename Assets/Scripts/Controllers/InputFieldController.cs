@@ -13,9 +13,10 @@ public class InputFieldController : MonoBehaviour {
 
 	private InputField inputField;
 
-	void Start () {
+	void Start() {
 		inputField = gameObject.GetComponent<InputField>();
 		inputField.onEndEdit.AddListener(RespondToText);
+		inputField.onEndEdit.AddListener(GameController.RespondToText);
 	}
 	
 	private void RespondToText(string text) {
